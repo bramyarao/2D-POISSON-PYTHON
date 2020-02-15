@@ -1,3 +1,3 @@
-# This work is copyrighted.
-# 2D-POISSON-Python3
+# Solving the 2D Poissons problem (coding in Python3)
+## This work is copyrighted.
 Coming soon...
