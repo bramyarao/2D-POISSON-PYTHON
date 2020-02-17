@@ -6,6 +6,9 @@
 #=========================================================
 
 import numpy as np
+import matplotlib.pyplot as plt
+
+# Files
 import forming_NS_NC
 
 #-------------------------
@@ -35,6 +38,31 @@ CP_y  = num_pts[3]  #No. of Collocation points in the y-direction
 # SOURCE POINTS
 #-------------------------
 
+NS = forming_NS_NC.forming_SourcePts(xdim1, xdim2, ydim1, ydim2, NS_x, NS_y)
+
+
+#-------------------------
+# COLLOCATION POINTS
+#-------------------------
+
+NC = forming_NS_NC.forming_CollocationPts(xdim1, xdim2, ydim1, ydim2, CP_x, CP_y)
+
+
+
+
+
+
+#-------------------------
+#PLOTTING
+#-------------------------
+if showPlot == True:
+
+    plt.scatter(NS[:,0], NS[:,1], c="r", marker="o")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.axis('equal')
+    plt.title("Source Points")
+    plt.show()
 
 
 
