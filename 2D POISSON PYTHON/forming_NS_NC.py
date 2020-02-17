@@ -1,6 +1,7 @@
 # Funtions for creating source and collocation points
 
 import numpy as np
+import math
 
 def forming_SourcePts(xdim1, xdim2, ydim1, ydim2, NS_x, NS_y):
     # Constructing the nodes in the x and y directions
@@ -37,10 +38,31 @@ def forming_CollocationPts(xdim1, xdim2, ydim1, ydim2, CP_x, CP_y):
     # Splittng the collocation points into interior and boundary points
     # Constructing the INTERIOR COLLOCATION POINTS NI_c
 
+    NP_in = (len(x_c)-2)*(len(y_c)-2)
+    NI_c = np.zeros((NP_in, 2))
 
+    # Constructing Nodes on the Essential Boundary
+    NP_EB = (2*len(x_c)+2*len(y_c)-4)
+    NEB = np.zeros((NP_EB, 2))
 
+    int_2 = 0 
+    int_3 = 0
+    for int_1 in range(NP_c):
+        x_temp = NC_total[int_1,0]
+        y_temp = NC_total[int_1,1]
+        if (math.isclose(x_temp,xdim1) or math.isclose(x_temp,xdim2) or math.isclose(y_temp,ydim1) or math.isclose(y_temp,ydim2)):
+            NEB[int_3,0] += x_temp
+            NEB[int_3,1] += y_temp
+            int_3 += 1
+        else:
+            NI_c[int_2,0] += x_temp
+            NI_c[int_2,1] += y_temp
+            int_2 += 1
 
-    return NC_total
+    # FORMING THE COLLOCATION POINTS MATRIX 
+    NC = np.concatenate((NI_c,NEB))
+
+    return NC, NI_c, NEB
         
             
     

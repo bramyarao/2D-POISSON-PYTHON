@@ -7,6 +7,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import interactive
 
 # Files
 import forming_NS_NC
@@ -23,7 +24,7 @@ xdim2 = 1.0
 ydim1 = 0.0
 ydim2 = 1.0
 
-num_pts = np.array([5,5,5,5], float)
+num_pts = np.array([10,10,40,40], float)
 #print(num_pts.dtype)
 
 # No. of Source points in the each direction
@@ -45,9 +46,7 @@ NS = forming_NS_NC.forming_SourcePts(xdim1, xdim2, ydim1, ydim2, NS_x, NS_y)
 # COLLOCATION POINTS
 #-------------------------
 
-NC = forming_NS_NC.forming_CollocationPts(xdim1, xdim2, ydim1, ydim2, CP_x, CP_y)
-
-
+NC, NI_c, NEB = forming_NS_NC.forming_CollocationPts(xdim1, xdim2, ydim1, ydim2, CP_x, CP_y)
 
 
 
@@ -57,12 +56,33 @@ NC = forming_NS_NC.forming_CollocationPts(xdim1, xdim2, ydim1, ydim2, CP_x, CP_y
 #-------------------------
 if showPlot == True:
 
+    plt.figure(1)
     plt.scatter(NS[:,0], NS[:,1], c="r", marker="o")
     plt.xlabel("x")
     plt.ylabel("y")
     plt.axis('equal')
     plt.title("Source Points")
+    interactive(True)
     plt.show()
+
+    plt.figure(2)
+    plt.scatter(NI_c[:,0], NI_c[:,1], c="b", marker="o", label='Interior')
+    plt.scatter(NEB[:,0], NEB[:,1], c="k", marker="o", label='Essential boundary')
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.axis('equal')
+    plt.title("Collocation Points")
+    plt.legend()
+    interactive(False)
+    plt.show()
+
+    # For Saving: plt.savefig('ScatterPlot.png')
+    # To show all figures at a time:
+    # - only first and last figures use interactive, middle ones do not
+    # - also first figure should have interactive(True)
+    # - and last one should have interactive(False)
+
+
 
 
 
