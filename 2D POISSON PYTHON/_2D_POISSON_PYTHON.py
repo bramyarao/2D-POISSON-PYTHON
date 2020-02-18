@@ -8,14 +8,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import interactive
+import math
 
 # Files
 import forming_NS_NC
+import forming_A
 
 #-------------------------
 #INPUT PARAMETERS
 #-------------------------
-showPlot = True #Plotting is done if true
+showPlot = False #Plotting is done if true
 printStatements = True #Printing is done if true
 
 #Domain
@@ -24,7 +26,7 @@ xdim2 = 1.0
 ydim1 = 0.0
 ydim2 = 1.0
 
-num_pts = np.array([10,10,40,40], float)
+num_pts = np.array([5,5,5,5], float)
 #print(num_pts.dtype)
 
 # No. of Source points in the each direction
@@ -38,15 +40,40 @@ CP_y  = num_pts[3]  #No. of Collocation points in the y-direction
 #-------------------------
 # SOURCE POINTS
 #-------------------------
-
 NS = forming_NS_NC.forming_SourcePts(xdim1, xdim2, ydim1, ydim2, NS_x, NS_y)
 
 
 #-------------------------
 # COLLOCATION POINTS
 #-------------------------
-
 NC, NI_c, NEB = forming_NS_NC.forming_CollocationPts(xdim1, xdim2, ydim1, ydim2, CP_x, CP_y)
+
+#-----------------------------------------------------------------------
+# ----------------------------POISSONS----------------------------------
+#-----------------------------------------------------------------------
+
+basis = 2   # Code only works for quadratic basis
+# No. of source points and total number of collocation points
+no_NS = NS.shape[0]  # Getting the number of rows in NS
+no_NC = NC.shape[0]
+no_NEB = NEB.shape[0]
+h = 1/(math.sqrt(no_NS)-1);
+ss = (basis+1)*h   # Support size for the RK SF
+
+sq_alphag = no_NS  # Weight for the essential boundary
+sq_alphah = 1.0     # Weight for the natural boundary
+#-------------------------------------------------------------------------
+
+# Solving the differntial equation
+# the A matriz will be of size no_NC x no_NS since u(x,y) is a scalar
+
+#-------------------------
+# Forming A matrix
+#-------------------------
+A1 = forming_A.part_of_NI(NC, NS, ss)
+
+
+
 
 
 

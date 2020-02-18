@@ -24,6 +24,12 @@
     <Compile Include="forming_NS_NC.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="forming_A.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ShapeFunction.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="_2D_POISSON_PYTHON.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
